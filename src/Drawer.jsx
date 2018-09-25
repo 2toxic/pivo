@@ -11,18 +11,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import MenuIcon from '@material-ui/icons/Menu';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import MapIcon from '@material-ui/icons/Map';
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import HomeIcon from '@material-ui/icons/Home';
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Map from './components/Map.jsx';
 import Playlist from './components/Playlist.jsx';
 import Home from './components/Home.jsx';
 import Trending from './components/Trending.jsx';
+import Unit from './components/Unit.jsx';
+import { DrawerMenuItems } from './DrawerMenuItems.jsx';
 
 const drawerWidth = 240;
 
@@ -81,32 +76,8 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <Divider />
         <List>
-          <ListItem button component={Link} to="/">
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
-          <ListItem button component={Link} to="/map">
-            <ListItemIcon>
-              <MapIcon />
-            </ListItemIcon>
-            <ListItemText primary="Map" />
-          </ListItem>
-          <ListItem button component={Link} to="/playlist">
-            <ListItemIcon>
-              <PlaylistPlayIcon />
-            </ListItemIcon>
-            <ListItemText primary="Playlist" />
-          </ListItem>
-          <ListItem button component={Link} to="/trending">
-            <ListItemIcon>
-              <TrendingUpIcon />
-            </ListItemIcon>
-            <ListItemText primary="Trending" />
-          </ListItem>
+          {DrawerMenuItems}
         </List>
-        <Divider />
       </div>
     );
 
@@ -162,6 +133,7 @@ class ResponsiveDrawer extends React.Component {
             <Route exact path='/playlist' component={Playlist} />
             <Route exact path='/trending' component={Trending} />
             <Route exact path='/' component={Home}/>
+            <Route path='/unit/:id' component={Unit} />
           </Switch>
         </main>
       </div>
