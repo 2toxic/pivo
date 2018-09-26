@@ -17,14 +17,21 @@ import Playlist from './components/Playlist.jsx';
 import Home from './components/Home.jsx';
 import Trending from './components/Trending.jsx';
 import Unit from './components/Unit.jsx';
-import { DrawerMenuItems } from './DrawerMenuItems.jsx';
+
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import MapIcon from '@material-ui/icons/Map';
+import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import HomeIcon from '@material-ui/icons/Home';
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 440,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -46,13 +53,13 @@ const styles = theme => ({
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
+    border: 0,
     [theme.breakpoints.up('md')]: {
       position: 'relative',
     },
   },
   content: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
   },
 });
@@ -76,7 +83,30 @@ class ResponsiveDrawer extends React.Component {
         </div>
         <Divider />
         <List>
-          {DrawerMenuItems}
+          <ListItem button component={Link} to="/" onClick={this.handleDrawerToggle}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button component={Link} to="/map" onClick={this.handleDrawerToggle}>
+            <ListItemIcon>
+              <MapIcon />
+            </ListItemIcon>
+            <ListItemText primary="Map" />
+          </ListItem>
+          <ListItem button component={Link} to="/playlist" onClick={this.handleDrawerToggle}>
+            <ListItemIcon>
+              <PlaylistPlayIcon />
+            </ListItemIcon>
+            <ListItemText primary="Playlist" />
+          </ListItem>
+          <ListItem button component={Link} to="/trending" onClick={this.handleDrawerToggle}>
+            <ListItemIcon>
+              <TrendingUpIcon />
+            </ListItemIcon>
+            <ListItemText primary="Trending" />
+          </ListItem>
         </List>
       </div>
     );

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import ResponsiveDrawer from './Drawer.jsx';
 import { BrowserRouter } from 'react-router-dom';
