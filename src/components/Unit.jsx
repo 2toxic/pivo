@@ -2,16 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Collapse from '@material-ui/core/Collapse';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import LinkIcon from '@material-ui/icons/Link';
+import PhoneIcon from '@material-ui/icons/Phone';
 
-import ThumbUpIcon from '@material-ui/icons/ThumbUp'
-import ThumbDownIcon from '@material-ui/icons/ThumbDown'
+import classnames from 'classnames';
+
 import axios from 'axios'
+
+import cocktail from './cocktail.png'
 
 const styles = theme => ({
   content: {
@@ -20,7 +28,17 @@ const styles = theme => ({
     padding: theme.spacing.unit * 3,
   },
   card: {
-    maxWidth: 800,
+    maxWidth: '100%',
+  },
+  mile_card: {
+    maxWidth: '700px',
+    marginBottom: '10px',
+    backgroundColor: '#F8F8F8',
+  },
+  mile_details_container: {
+  },
+  mile_details: {
+    minWidth: '300px',
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.
@@ -30,20 +48,180 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  last_mile_img: {
+    objectFit: 'contain',
+  },
 });
 
 class Unit extends React.Component {
   state = {
-    unit: {}
+    mile_expanded: false,
+    mile_expand_button_msg: 'show me da wey',
+    info_expanded: false,
+    info_expand_button_msg: 'show info'
   };
 
-  componentDidMount() {
-    axios.get(`http://localhost:8000/api/get_place/` + this.props.match.params.id)
+  handleExpandMileClick = () => {
+    this.setState(state => {
+      let msg = 'close me da wey';
+      if (state.mile_expanded) {
+        msg = 'show me da wey';
+      }
+      let info_exp = state.info_expanded;
+      let info_msg = state.info_expand_button_msg;
+      if (!state.mile_expanded && state.info_expanded) {
+        info_exp = false;
+        info_msg = 'show info';
+      }
+
+      return {
+        mile_expanded: !state.mile_expanded,
+        mile_expand_button_msg: msg,
+        info_expanded: info_exp,
+        info_expand_button_msg: info_msg,
+      }});
+  };
+
+  handleExpandInfoClick = () => {
+    this.setState(state => {
+      let msg = 'close info';
+      if (state.info_expanded) {
+        msg = 'show info';
+      }
+
+      let mile_exp = state.mile_expanded;
+      let mile_msg = state.mile_expand_button_msg;
+      if (!state.info_expanded && state.mile_expanded) {
+        mile_exp = false;
+        mile_msg = 'show me da wey';
+      }
+      return {
+        info_expanded: !state.info_expanded,
+        info_expand_button_msg: msg,
+        mile_expanded: mile_exp,
+        mile_expand_button_msg: mile_msg,
+      }});
+  };
+
+  set_data_from_apis() {
+    let { navicontainer, naviaddress } = this.state.eatout;
+    axios.get(`https://api.naviaddress.com/api/v1.5/Addresses/${navicontainer}/${naviaddress}?lang=en`)
       .then(res => {
-        const unit = res.data;
-        this.setState({ unit });
+        const resp = res.data.result;
+        if (resp.cover.length < 1) {
+          this.setState({ cover: cocktail });
+        } else {
+          this.setState({
+            name: resp.name,
+            cover: resp.sharable_cover[0].image,
+            description: resp.description,
+            location: resp.postal_address,
+            mile: resp.last_mile,
+            // convert [{type: t, value: v}, ...] to {t: v, ...}
+            info: resp.contacts.reduce((map, obj) => { map[obj.type] = obj.value; return map}, {}),
+          });
+        }
       })
+      .catch(error => {
+        this.setState({ cover: cocktail });
+      });
   }
+
+  componentDidMount = () => {
+    axios.get(`http://localhost:8000/p/` + this.props.match.params.id)
+      .then(res => {
+        this.setState({ eatout: res.data });
+        this.set_data_from_apis();
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  display_mile = () => {
+    if (!this.state.mile) {
+      return <Typography paragraph>Owner did not provide last mile info</Typography>;
+    }
+    let steps = this.state.mile.steps;
+    let content = []
+    for (let i = 0; i < steps.length; i++) {
+      content.push(
+      <div className={this.props.classes.center_wrapper} key={`step-${i}`}>
+        <Card className={this.props.classes.mile_card}>
+        <div className={this.props.classes.mile_details_container}>
+          <CardContent className={this.props.classes.mile_details}>
+            <Typography component="p">
+              {steps[i].text}
+            </Typography>
+          </CardContent>
+        </div>
+        <CardMedia
+          component="img"
+          className={this.props.classes.media}
+          height="500"
+          image={steps[i].image}
+          />
+        </Card>
+      </div>
+      )
+    }
+
+    return content;
+  }
+
+  display_info = () => {
+    let info = this.state.info;
+    if (!info) {
+      return;
+    }
+    let phone_and_link = [];
+    let other = [];
+    if ('website' in info) {
+      phone_and_link.push(
+        <ListItem button component='a' href={info.website}>
+          <ListItemIcon>
+            <LinkIcon />
+          </ListItemIcon>
+          <ListItemText primary={info.website} />
+        </ListItem>
+      )
+    }
+    if ('phone' in info) {
+      phone_and_link.push(
+        <ListItem button component='a' href={`tel:${info.phone}`}>
+          <ListItemIcon>
+            <PhoneIcon />
+          </ListItemIcon>
+          <ListItemText primary={info.phone} />
+        </ListItem>
+      )
+    }
+
+    for (var contact in info) {
+      if (['website', 'phone'].indexOf(contact) === -1) {
+        other.push(
+          <ListItem button component='a' href={info[contact]}>
+            <ListItemText primary={contact} secondary={info[contact]} />
+          </ListItem>
+        )
+      }
+    }
+    return (
+      <div className={this.props.classes.center_wrapper}>
+        <Card className={this.props.classes.mile_card}>
+        <div className={this.props.classes.mile_details_container}>
+          <CardContent className={this.props.classes.mile_details}>
+            <List>
+              {phone_and_link}
+              {other}
+            </List>
+          </CardContent>
+        </div>
+        </Card>
+      </div>
+    )
+  }
+
 
   render() {
     const { classes } = this.props;
@@ -51,31 +229,52 @@ class Unit extends React.Component {
     return (
       <div className={classes.center_wrapper}>
           <Card className={classes.card}>
-            <CardActionArea>
               <CardMedia
                 component="img"
                 className={classes.media}
                 height="400"
-                image="http://progorodsamara.ru/userfiles/picoriginal/img-20160623155118-759.jpg"
-                title={this.state.unit.id}
-              />
+                image={this.state.cover}
+                />
               <CardContent>
                 <Typography gutterBottom variant="headline" component="h2">
-                  {this.state.unit.name}
+                  {this.state.name}
                 </Typography>
                 <Typography component="p">
-                  {this.state.unit.location}
+                  {this.state.location}
                 </Typography>
               </CardContent>
-            </CardActionArea>
             <CardActions>
-              <Button size="small" color="primary">
-                <ThumbUpIcon />
+              <Button size="small" color="primary"
+                className={classnames({
+                  [this.props.classes.expandOpen]: this.state.mile_expanded,
+                })}
+                onClick={this.handleExpandMileClick}
+                aria-expanded={this.state.mile_expanded}
+                disabled={!this.state.mile}
+              >
+                {this.state.mile_expand_button_msg}
               </Button>
-              <Button size="small" color="primary">
-                <ThumbDownIcon />
+              <Button size="small" color="primary"
+                className={classnames({
+                  [this.props.classes.expandOpen]: this.state.expanded,
+                })}
+                onClick={this.handleExpandInfoClick}
+                aria-expanded={this.state.info_expanded}
+                disabled={!this.state.info}
+              >
+                {this.state.info_expand_button_msg}
               </Button>
             </CardActions>
+            <Collapse in={this.state.mile_expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                {this.display_mile()}
+              </CardContent>
+            </Collapse>
+            <Collapse in={this.state.info_expanded} timeout="auto" unmountOnExit>
+              <CardContent>
+                {this.display_info()}
+              </CardContent>
+            </Collapse>
           </Card>
       </div>
     )
