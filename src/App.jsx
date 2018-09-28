@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
 import ResponsiveDrawer from './Drawer.jsx';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Login from './components/Login.jsx';
+import Register from './components/Register.jsx';
 
+const appRoute = () => {
+  return (
+    <div className="App">
+      <ResponsiveDrawer />
+    </div>
+  )
+}
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <ResponsiveDrawer />
-        </div>
+        <Switch>
+          <Route exact path='/login' component={Login} />
+          <Route exact path='/register' component={Register} />
+          <Route path='/' component={appRoute} />
+        </Switch>
       </BrowserRouter>
     );
   }

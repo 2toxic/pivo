@@ -10,14 +10,15 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
-import MenuIcon from '@material-ui/icons/Menu';
 import { Route, Switch } from 'react-router-dom';
 import Map from './components/Map.jsx';
 import Playlist from './components/Playlist.jsx';
 import Home from './components/Home.jsx';
 import Trending from './components/Trending.jsx';
 import Unit from './components/Unit.jsx';
+import AccountHeader from './components/account.jsx'
 
+import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -78,9 +79,7 @@ class ResponsiveDrawer extends React.Component {
 
     const drawer = (
       <div>
-        <div className={classes.toolbar}>
-          PIVO
-        </div>
+        <AccountHeader />
         <Divider />
         <List>
           <ListItem button component={Link} to="/" onClick={this.handleDrawerToggle}>
