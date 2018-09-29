@@ -9,11 +9,8 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import {Link} from 'react-router-dom';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import cocktail from './cocktail.png';
 
 import StarIcon from '@material-ui/icons/Star';
@@ -54,16 +51,13 @@ class Unit extends React.Component {
           logged_in: false,
           email_error: '',
           password_error: '',
+          listitems: '',
       }
-      this.handleChange();
   }
-  state = {
-    listitems: '',
-    handled: false,
-  };
 
-  handleChange = () => {
-    const { classes, theme } = this.props;
+  componentDidMount = () => {
+    const { classes } = this.props;
+    this.setState({ listitems: [] })
 
     axios({
       url: 'http://localhost:8000/demo',
@@ -128,7 +122,7 @@ class Unit extends React.Component {
                 <CardMedia
                   className={classes.cover}
                   image={cocktail}
-                  title="Live from space album cover"
+                  title=""
                 />
               </Card>
             </ListItem>
@@ -136,6 +130,7 @@ class Unit extends React.Component {
         });
       }
       this.setState({ listitems: items });
+      this.forceUpdate();
     }).catch((err) => {
       console.log(err);
       this.setState({
@@ -146,12 +141,22 @@ class Unit extends React.Component {
         ]
       })
     });
-    this.setState({ handled: true });
-    console.log(this.state);
+    this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
-    const { classes, theme } = this.props;
+    let render_items = this.state.listitems;
+    if (render_items.length < 1) {
+      render_items = [
+        <ListItem>
+            <CircularProgress />
+        </ListItem>
+      ]
+    }
     return (
       <Grid container
         alignItems="center"
@@ -159,7 +164,7 @@ class Unit extends React.Component {
         >
         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
           <List>
-            {this.state.listitems}
+            {render_items}
           </List>
         </Grid>
       </Grid>

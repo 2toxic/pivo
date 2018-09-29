@@ -15,10 +15,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import LinkIcon from '@material-ui/icons/Link';
 import PhoneIcon from '@material-ui/icons/Phone';
 
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 import classnames from 'classnames';
-
 import axios from 'axios'
-
 import cocktail from './cocktail.png'
 
 const styles = theme => ({
@@ -130,7 +130,21 @@ class Unit extends React.Component {
   componentDidMount = () => {
     axios.get(`http://localhost:8000/p/` + this.props.match.params.id)
       .then(res => {
-        this.setState({ eatout: res.data });
+        let stars = [];
+        for (let j = 0; j < (res.data.rating || 0); j++) {
+          stars.push(
+            <StarIcon />
+          )
+        }
+        for (let j = (res.data.rating || 0); j < 5; j++) {
+          stars.push(
+            <StarBorderIcon />
+          )
+        }
+        this.setState({
+          eatout: res.data,
+          stars: stars,
+        });
         this.set_data_from_apis();
       })
       .catch(error => {
@@ -139,7 +153,7 @@ class Unit extends React.Component {
   }
 
   display_mile = () => {
-    if (!this.state.mile) {
+    if (!this.state.mile || !this.state.mile.steps) {
       return <Typography paragraph>Owner did not provide last mile info</Typography>;
     }
     let steps = this.state.mile.steps;
@@ -241,6 +255,9 @@ class Unit extends React.Component {
                 </Typography>
                 <Typography component="p">
                   {this.state.location}
+                </Typography>
+                <Typography component="p">
+                  {this.state.stars}
                 </Typography>
               </CardContent>
             <CardActions>
