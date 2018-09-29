@@ -2,23 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const styles = theme => ({
-  card: {
-    //maxWidth: '50%',
-  },
   container: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -30,7 +22,7 @@ const styles = theme => ({
   },
 });
 
-class Register extends React.Component {
+class RegisterComponent extends React.Component {
   constructor (props) {
       super(props);
       this.state = {
@@ -108,52 +100,38 @@ class Register extends React.Component {
     }
 
     return (
-      <Grid container
-            alignItems="center"
-            justify="center"
-            style={{ minHeight: '100vh' }}
-      >
-
-        <Grid item xs={10} sm={6} md={4} lg={3}>
-          <Card className={classes.card}>
-            <CardContent>
-              <form className={classes.container} noValidate>
-                <FormControl className={classes.textField} error={Boolean(this.state.email_error)} aria-describedby="email-error-text">
-                  <InputLabel htmlFor="email">Email</InputLabel>
-                  <Input id="email" onChange={this.handleChange} />
-                  <FormHelperText id="email-error-text">{this.state.email_error}</FormHelperText>
-                </FormControl>
-                <FormControl className={classes.textField} error={Boolean(this.state.tripadvisor_error)} aria-describedby="tripadvisor-error-text">
-                  <InputLabel htmlFor="tripadvisor">Tripadvisor username</InputLabel>
-                  <Input id="tripadvisor" onChange={this.handleChange} />
-                  <FormHelperText id="tripadvisor-error-text">{this.state.tripadvisor_error}</FormHelperText>
-                </FormControl>
-                <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="password-error-text">
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input id="password" onChange={this.handleChange} type='password' />
-                  <FormHelperText id="password-error-text">{this.state.password_error}</FormHelperText>
-                </FormControl>
-                <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="conf_password-error-text">
-                  <InputLabel htmlFor="conf_password">Confirm password</InputLabel>
-                  <Input id="conf_password" onChange={this.handleChange} type='password' />
-                  <FormHelperText id="conf_password-error-text">{this.state.password_error}</FormHelperText>
-                </FormControl>
-              </form>
-            </CardContent>
-            <CardActions>
-              <Button onClick={this.do_register}>Register</Button>
-              <Button component={Link} to='/login'>Login</Button>
-            </CardActions>
-          </Card>
-        </Grid>
-      </Grid>
+      <div>
+        <form className={classes.container} noValidate>
+          <FormControl className={classes.textField} error={Boolean(this.state.email_error)} aria-describedby="email-error-text">
+            <InputLabel htmlFor="email">Email</InputLabel>
+            <Input id="email" onChange={this.handleChange} />
+            <FormHelperText id="email-error-text">{this.state.email_error}</FormHelperText>
+          </FormControl>
+          <FormControl className={classes.textField} error={Boolean(this.state.tripadvisor_error)} aria-describedby="tripadvisor-error-text">
+            <InputLabel htmlFor="tripadvisor">Tripadvisor username</InputLabel>
+            <Input id="tripadvisor" onChange={this.handleChange} />
+            <FormHelperText id="tripadvisor-error-text">{this.state.tripadvisor_error}</FormHelperText>
+          </FormControl>
+          <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="password-error-text">
+            <InputLabel htmlFor="password">Password</InputLabel>
+            <Input id="password" onChange={this.handleChange} type='password' />
+            <FormHelperText id="password-error-text">{this.state.password_error}</FormHelperText>
+          </FormControl>
+          <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="conf_password-error-text">
+            <InputLabel htmlFor="conf_password">Confirm password</InputLabel>
+            <Input id="conf_password" onChange={this.handleChange} type='password' />
+            <FormHelperText id="conf_password-error-text">{this.state.password_error}</FormHelperText>
+          </FormControl>
+        </form>
+        <Button onClick={this.do_register}>Register</Button>
+      </div>
     )
   }
 };
 
-Register.propTypes = {
+RegisterComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Register);
+export default withStyles(styles, { withTheme: true })(RegisterComponent);

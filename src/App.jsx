@@ -3,7 +3,7 @@ import './App.css';
 import ResponsiveDrawer from './Drawer.jsx';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './components/Login.jsx';
-import Register from './components/Register.jsx';
+import Landing from './components/Landing.jsx'
 
 const appRoute = () => {
   return (
@@ -19,7 +19,7 @@ class App extends Component {
       <BrowserRouter>
         <Switch>
           <Route exact path='/login' component={Login} />
-          <Route exact path='/register' component={Register} />
+          <Route exact path='/landing' component={Landing} />
           <Route path='/' component={appRoute} />
         </Switch>
       </BrowserRouter>

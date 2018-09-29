@@ -7,11 +7,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import CardHeader from '@material-ui/core/CardHeader';
 import Avatar from '@material-ui/core/Avatar';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
-import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import axios from 'axios';
@@ -52,12 +50,12 @@ class AccountHeader extends React.Component {
         method: 'GET',
         withCredentials: true
     }).then((resp) => {
+      localStorage.setItem('username', 'ANONYMOUS');
+      localStorage.setItem('userid', 0);
+      this.forceUpdate();
     }).catch((err) => {
       console.log(err);
     });
-    localStorage.setItem('username', 'ANONYMOUS');
-    localStorage.setItem('userid', 0);
-    this.forceUpdate();
   }
 
   render() {
@@ -66,9 +64,8 @@ class AccountHeader extends React.Component {
 
 
     let logout_button = '';
-    let login_button = '';
     let my_account_button = '';
-    let register_button = '';
+    let redirect = '';
     if (localStorage.getItem('username') !== 'ANONYMOUS') {
       logout_button = <MenuItem onClick={this.handleLogout}>
         <ListItemIcon>
@@ -83,22 +80,12 @@ class AccountHeader extends React.Component {
         <ListItemText inset primary="My account" />
       </MenuItem>
     } else {
-      login_button = <MenuItem component={Link} to='/login' onClick={this.handleClose}>
-          <ListItemIcon>
-            <FingerprintIcon />
-          </ListItemIcon>
-          <ListItemText inset primary="Login" />
-        </MenuItem>
-      register_button = <MenuItem component={Link} to='/register' onClick={this.handleClose}>
-        <ListItemIcon>
-          <PersonAddIcon />
-        </ListItemIcon>
-        <ListItemText inset primary="Register" />
-      </MenuItem>
+      redirect = <Redirect to='/landing' />
     }
 
     return (
       <div>
+        {redirect}
         <div className={classes.toolbar}>
           <CardHeader
           avatar={
@@ -124,8 +111,6 @@ class AccountHeader extends React.Component {
             >
               {my_account_button}
               {logout_button}
-              {login_button}
-              {register_button}
             </Menu>
             </div>
           }

@@ -14,7 +14,6 @@ import { Route, Switch } from 'react-router-dom';
 import Search from './components/Search.jsx';
 import Playlist from './components/Playlist.jsx';
 import Home from './components/Home.jsx';
-import Trending from './components/Trending.jsx';
 import Unit from './components/Unit.jsx';
 import AccountHeader from './components/account.jsx'
 
@@ -24,7 +23,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import BlurOnIcon from '@material-ui/icons/BlurOn';
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 
@@ -100,12 +98,6 @@ class ResponsiveDrawer extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Recommendations" />
           </ListItem>
-          <ListItem button component={Link} to="/trending" onClick={this.handleDrawerToggle}>
-            <ListItemIcon>
-              <TrendingUpIcon />
-            </ListItemIcon>
-            <ListItemText primary="Trending" />
-          </ListItem>
         </List>
       </div>
     );
@@ -160,7 +152,6 @@ class ResponsiveDrawer extends React.Component {
           <Switch>
             <Route exact path='/search' component={Search} />
             <Route exact path='/playlist' component={Playlist} />
-            <Route exact path='/trending' component={Trending} />
             <Route exact path='/' component={Home}/>
             <Route path='/unit/:id' component={Unit} />
           </Switch>
