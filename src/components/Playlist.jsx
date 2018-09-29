@@ -7,16 +7,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import {Link} from 'react-router-dom';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import cocktail from './cocktail.png';
+import Rateit from './Rateit.jsx'
 
-import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
-
-import axios from 'axios'
+import axios from 'axios';
 
 const styles = theme => ({
   textField: {
@@ -42,7 +40,7 @@ const styles = theme => ({
   },
 });
 
-class Unit extends React.Component {
+class Playlist extends React.Component {
   constructor (props) {
       super(props);
       this.state = {
@@ -53,6 +51,10 @@ class Unit extends React.Component {
           password_error: '',
           listitems: '',
       }
+  }
+
+  move_to = (url) => {
+    this.props.history.push(url);
   }
 
   componentDidMount = () => {
@@ -66,17 +68,6 @@ class Unit extends React.Component {
     }).then((resp) => {
       let items = [];
       for (let i = 0; i < resp.data.length; i++) {
-        let stars = [];
-        for (let j = 0; j < (resp.data[i].rating || 0); j++) {
-          stars.push(
-            <StarIcon />
-          )
-        }
-        for (let j = (resp.data[i].rating || 0); j < 5; j++) {
-          stars.push(
-            <StarBorderIcon />
-          )
-        }
         let container = resp.data[i].navicontainer;
         let address = resp.data[i].naviaddress;
         axios({
@@ -89,41 +80,45 @@ class Unit extends React.Component {
             }
           }
           items.push(
-            <ListItem key={'litem' + i} button component={Link} to={`/unit/${resp.data[i].id}`}>
+            <ListItem key={'litem' + i}>
               <Card className={classes.card}>
-                <div className={classes.details}>
-                  <CardContent className={classes.content}>
-                    <Typography variant="headline">{resp.data[i].name}</Typography>
-                    <Typography variant="subheading" color="textSecondary">
-                      {stars}
-                    </Typography>
-                  </CardContent>
-                </div>
-                <CardMedia
-                  className={classes.cover}
-                  image={image}
-                  title="Live from space album cover"
-                />
+                <CardActionArea onClick={() => this.move_to(`/unit/${resp.data[i].id}`)}>
+                  <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                      <Typography variant="headline">{resp2.data.result.name}</Typography>
+                      <Typography variant="subheading" color="textSecondary">
+                        <Rateit for_id={resp.data[i].id} rating={resp.data[i].rating}/>
+                      </Typography>
+                    </CardContent>
+                  </div>
+                </CardActionArea>
+                  <CardMedia
+                    className={classes.cover}
+                    image={image}
+                    title="Live from space album cover"
+                  />
               </Card>
             </ListItem>
           )
         }).catch(err => {
           items.push(
-            <ListItem key={'litem' + i} button component={Link} to={`/unit/${resp.data[i].id}`}>
+            <ListItem key={'litem' + i}>
               <Card className={classes.card}>
-                <div className={classes.details}>
-                  <CardContent className={classes.content}>
-                    <Typography variant="headline">{resp.data[i].name}</Typography>
-                    <Typography variant="subheading" color="textSecondary">
-                      {stars}
-                    </Typography>
-                  </CardContent>
-                </div>
-                <CardMedia
-                  className={classes.cover}
-                  image={cocktail}
-                  title=""
-                />
+                <CardActionArea onClick={() => this.move_to(`/unit/${resp.data[i].id}`)}>
+                  <div className={classes.details}>
+                    <CardContent className={classes.content}>
+                      <Typography variant="headline">{resp.data[i].name}</Typography>
+                      <Typography variant="subheading" color="textSecondary">
+                        <Rateit for_id={resp.data[i].id} rating={resp.data[i].rating}/>
+                      </Typography>
+                    </CardContent>
+                  </div>
+                </CardActionArea>
+                  <CardMedia
+                    className={classes.cover}
+                    image={cocktail}
+                    title="Live from space album cover"
+                  />
               </Card>
             </ListItem>
           )
@@ -172,9 +167,9 @@ class Unit extends React.Component {
   }
 }
 
-Unit.propTypes = {
+Playlist.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Unit);
+export default withStyles(styles, { withTheme: true })(Playlist);
