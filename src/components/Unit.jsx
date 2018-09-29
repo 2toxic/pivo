@@ -56,16 +56,16 @@ const styles = theme => ({
 class Unit extends React.Component {
   state = {
     mile_expanded: false,
-    mile_expand_button_msg: 'show me da wey',
+    mile_expand_button_msg: 'show way',
     info_expanded: false,
     info_expand_button_msg: 'show info'
   };
 
   handleExpandMileClick = () => {
     this.setState(state => {
-      let msg = 'close me da wey';
+      let msg = 'close way';
       if (state.mile_expanded) {
-        msg = 'show me da wey';
+        msg = 'show way';
       }
       let info_exp = state.info_expanded;
       let info_msg = state.info_expand_button_msg;
@@ -93,7 +93,7 @@ class Unit extends React.Component {
       let mile_msg = state.mile_expand_button_msg;
       if (!state.info_expanded && state.mile_expanded) {
         mile_exp = false;
-        mile_msg = 'show me da wey';
+        mile_msg = 'show way';
       }
       return {
         info_expanded: !state.info_expanded,
@@ -105,7 +105,7 @@ class Unit extends React.Component {
 
   set_data_from_apis() {
     let { navicontainer, naviaddress } = this.state.eatout;
-    axios.get(`https://api.naviaddress.com/api/v1.5/Addresses/${navicontainer}/${naviaddress}?lang=en`)
+    axios.get(`https://api.naviaddress.com/api/v1.5/Addresses/${navicontainer}/${naviaddress}?lang=ru`)
       .then(res => {
         const resp = res.data.result;
         if (resp.cover.length < 1) {
@@ -113,7 +113,7 @@ class Unit extends React.Component {
         } else {
           this.setState({
             name: resp.name,
-            cover: resp.sharable_cover[0].image,
+            cover: resp.cover[0].image,
             description: resp.description,
             location: resp.postal_address,
             mile: resp.last_mile,
