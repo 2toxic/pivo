@@ -26,8 +26,8 @@ class RegisterComponent extends React.Component {
   constructor (props) {
       super(props);
       this.state = {
-          email: '',
-          password: '',
+          reg_email: '',
+          reg_password: '',
           tripadvisor: '',
           email_error: '',
           password_error: '',
@@ -41,8 +41,8 @@ class RegisterComponent extends React.Component {
         [event.target.id]: event.target.value
     })
     copy_state[event.target.id] = event.target.value;
-    if (event.target.id === 'password' || event.target.id === 'conf_password') {
-      if (copy_state.password !== copy_state.conf_password) {
+    if (event.target.id === 'reg_password' || event.target.id === 'reg_conf_password') {
+      if (copy_state.reg_password !== copy_state.reg_conf_password) {
         this.setState({ password_error: 'Passwords do not match' });
       }
       else {
@@ -61,8 +61,8 @@ class RegisterComponent extends React.Component {
         method: 'POST',
         withCredentials: true,
         data: {
-                 email: this.state.email,
-                 password: this.state.password,
+                 email: this.state.reg_email,
+                 password: this.state.reg_password,
                  tripadvisor_username: this.state.tripadvisor,
         },
     })
@@ -103,8 +103,8 @@ class RegisterComponent extends React.Component {
       <div>
         <form className={classes.container} noValidate>
           <FormControl className={classes.textField} error={Boolean(this.state.email_error)} aria-describedby="email-error-text">
-            <InputLabel htmlFor="email">Email</InputLabel>
-            <Input id="email" onChange={this.handleChange} />
+            <InputLabel htmlFor="reg_email">Email</InputLabel>
+            <Input id="reg_email" onChange={this.handleChange} />
             <FormHelperText id="email-error-text">{this.state.email_error}</FormHelperText>
           </FormControl>
           <FormControl className={classes.textField} error={Boolean(this.state.tripadvisor_error)} aria-describedby="tripadvisor-error-text">
@@ -113,13 +113,13 @@ class RegisterComponent extends React.Component {
             <FormHelperText id="tripadvisor-error-text">{this.state.tripadvisor_error}</FormHelperText>
           </FormControl>
           <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="password-error-text">
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input id="password" onChange={this.handleChange} type='password' />
+            <InputLabel htmlFor="reg_password">Password</InputLabel>
+            <Input id="reg_password" onChange={this.handleChange} type='password' />
             <FormHelperText id="password-error-text">{this.state.password_error}</FormHelperText>
           </FormControl>
           <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="conf_password-error-text">
-            <InputLabel htmlFor="conf_password">Confirm password</InputLabel>
-            <Input id="conf_password" onChange={this.handleChange} type='password' />
+            <InputLabel htmlFor="reg_conf_password">Confirm password</InputLabel>
+            <Input id="reg_conf_password" onChange={this.handleChange} type='password' />
             <FormHelperText id="conf_password-error-text">{this.state.password_error}</FormHelperText>
           </FormControl>
         </form>

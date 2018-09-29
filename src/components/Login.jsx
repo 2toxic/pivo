@@ -22,7 +22,6 @@ function TabContainer({ children }) {
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired,
 };
 
 const styles = theme => ({
@@ -54,7 +53,9 @@ const styles = theme => ({
 });
 
 class Login extends React.Component {
-  state = {}
+  state = {
+    value: 0,
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
