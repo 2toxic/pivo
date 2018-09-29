@@ -62,7 +62,7 @@ class Playlist extends React.Component {
     this.setState({ listitems: [] })
 
     axios({
-      url: 'http://localhost:8000/demo',
+      url: 'https://apivo.0sk.in/demo',
       method: 'GET',
       withCredentials: true,
     }).then((resp) => {

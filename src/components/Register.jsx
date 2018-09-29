@@ -65,7 +65,7 @@ class Register extends React.Component {
     }
     this.setState({ email_error: '', password_error: ''});
     axios({
-        url: 'http://localhost:8000/register',
+        url: 'https://apivo.0sk.in/register',
         method: 'POST',
         withCredentials: true,
         data: {

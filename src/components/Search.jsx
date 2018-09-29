@@ -42,7 +42,7 @@ class Unit extends React.Component {
     }
     this.setState({ 'search_places': event.target.value });
     axios({
-      url: 'http://localhost:8000/p/range/0/10/' + event.target.value,
+      url: 'https://apivo.0sk.in/p/range/0/10/' + event.target.value,
       method: 'GET',
       withCredentials: true,
     }).then((resp) => {

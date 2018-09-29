@@ -128,7 +128,7 @@ class Unit extends React.Component {
   }
 
   componentDidMount = () => {
-    axios.get(`http://localhost:8000/p/` + this.props.match.params.id)
+    axios.get(`https://apivo.0sk.in/p/` + this.props.match.params.id)
       .then(res => {
         let stars = [];
         for (let j = 0; j < (res.data.rating || 0); j++) {

@@ -52,7 +52,7 @@ class Login extends React.Component {
   do_login = () => {
     this.setState({ email_error: '', password_error: ''});
     axios({
-        url: 'http://localhost:8000/login',
+        url: 'https://apivo.0sk.in/login',
         method: 'POST',
         withCredentials: true,
         data: {

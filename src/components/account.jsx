@@ -48,7 +48,7 @@ class AccountHeader extends React.Component {
   handleLogout = () => {
     this.handleClose();
     axios({
-        url: 'http://localhost:8000/logout',
+        url: 'https://apivo.0sk.in/logout',
         method: 'GET',
         withCredentials: true
     }).then((resp) => {

@@ -32,7 +32,7 @@ class Rateit extends React.Component {
     let stars_text = <Typography variant='subheading' style={{color: 'green',}}>Rated</Typography>
     let stars_text_error = <Typography variant='subheading' style={{color: 'red',}}>Error occured</Typography>
     axios({
-      url: `http://localhost:8000/rate/${this.props.for_id}`,
+      url: `https://apivo.0sk.in/rate/${this.props.for_id}`,
       method: 'POST',
       data: {rating: idx + 1}
     }).then(resp => {
