@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Divider from '@material-ui/core/Divider';
 import { Route, Switch } from 'react-router-dom';
-import Map from './components/Map.jsx';
+import Search from './components/Search.jsx';
 import Playlist from './components/Playlist.jsx';
 import Home from './components/Home.jsx';
 import Trending from './components/Trending.jsx';
@@ -22,8 +22,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import MapIcon from '@material-ui/icons/Map';
-import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+import SearchIcon from '@material-ui/icons/Search';
+import BlurOnIcon from '@material-ui/icons/BlurOn';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
@@ -88,17 +88,17 @@ class ResponsiveDrawer extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component={Link} to="/map" onClick={this.handleDrawerToggle}>
+          <ListItem button component={Link} to="/search" onClick={this.handleDrawerToggle}>
             <ListItemIcon>
-              <MapIcon />
+              <SearchIcon />
             </ListItemIcon>
-            <ListItemText primary="Map" />
+            <ListItemText primary="Search" />
           </ListItem>
           <ListItem button component={Link} to="/playlist" onClick={this.handleDrawerToggle}>
             <ListItemIcon>
-              <PlaylistPlayIcon />
+              <BlurOnIcon />
             </ListItemIcon>
-            <ListItemText primary="Playlist" />
+            <ListItemText primary="Recommendations" />
           </ListItem>
           <ListItem button component={Link} to="/trending" onClick={this.handleDrawerToggle}>
             <ListItemIcon>
@@ -123,7 +123,7 @@ class ResponsiveDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <Typography variant="title" color="inherit" noWrap>
-              PIVO
+              EATOUT
             </Typography>
           </Toolbar>
         </AppBar>
@@ -158,7 +158,7 @@ class ResponsiveDrawer extends React.Component {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           <Switch>
-            <Route exact path='/map' component={Map} />
+            <Route exact path='/search' component={Search} />
             <Route exact path='/playlist' component={Playlist} />
             <Route exact path='/trending' component={Trending} />
             <Route exact path='/' component={Home}/>
