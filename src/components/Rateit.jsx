@@ -27,7 +27,6 @@ class Rateit extends React.Component {
 
   click = (event, idx) => {
     event.stopPropagation();
-    let stars_text = <Typography variant='subheading' style={{color: 'green',}}>Rated</Typography>
     let stars_text_error = <Typography variant='subheading' style={{color: 'red',}}>Error occured</Typography>
     axios({
       url: `https://apivo.0sk.in/rate/${this.props.for_id}`,
