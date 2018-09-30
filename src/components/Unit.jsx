@@ -18,8 +18,9 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import classnames from 'classnames';
-import axios from 'axios'
-import cocktail from './cocktail.png'
+import axios from 'axios';
+import cocktail from './cocktail.png';
+import Rateit from './Rateit.jsx';
 
 const styles = theme => ({
   content: {
@@ -110,40 +111,35 @@ class Unit extends React.Component {
         const resp = res.data.result;
         if (resp.cover.length < 1) {
           this.setState({ cover: cocktail });
-        } else {
-          this.setState({
-            name: resp.name,
-            cover: resp.cover[0].image,
-            description: resp.description,
-            location: resp.postal_address,
-            mile: resp.last_mile,
-            // convert [{type: t, value: v}, ...] to {t: v, ...}
-            info: resp.contacts.reduce((map, obj) => { map[obj.type] = obj.value; return map}, {}),
-          });
         }
+        this.setState({
+          name: resp.name,
+          cover: resp.cover[0].image,
+          description: resp.description,
+          location: resp.postal_address,
+          mile: resp.last_mile,
+          // convert [{type: t, value: v}, ...] to {t: v, ...}
+          info: resp.contacts.reduce((map, obj) => { map[obj.type] = obj.value; return map}, {}),
+        });
       })
       .catch(error => {
-        this.setState({ cover: cocktail });
+        this.setState({
+          cover: this.state.eatout.image_url ? this.state.eatout.image_url : cocktail,
+          name: this.state.eatout.name,
+          description: '',
+          location: '',
+          mile: '',
+          info: '',
+        });
       });
   }
 
   componentDidMount = () => {
     axios.get(`https://apivo.0sk.in/p/` + this.props.match.params.id)
       .then(res => {
-        let stars = [];
-        for (let j = 0; j < (res.data.rating || 0); j++) {
-          stars.push(
-            <StarIcon />
-          )
-        }
-        for (let j = (res.data.rating || 0); j < 5; j++) {
-          stars.push(
-            <StarBorderIcon />
-          )
-        }
         this.setState({
           eatout: res.data,
-          stars: stars,
+          rateit: <Rateit for_id={res.data.id} rating={res.data.rating} />
         });
         this.set_data_from_apis();
       })
@@ -251,7 +247,7 @@ class Unit extends React.Component {
                   {this.state.location}
                 </Typography>
                 <Typography component="p">
-                  {this.state.stars}
+                  {this.state.rateit}
                 </Typography>
                 {this.display_info()}
               </CardContent>

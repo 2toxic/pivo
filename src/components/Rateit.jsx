@@ -27,6 +27,7 @@ class Rateit extends React.Component {
     axios({
       url: `https://apivo.0sk.in/rate/${this.props.for_id}`,
       method: 'POST',
+      withCredentials: true,
       data: {rating: idx + 1}
     }).then(resp => {
       if (resp.error) {

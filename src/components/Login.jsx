@@ -8,6 +8,7 @@ import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import Paper from '@material-ui/core/Paper';
 
 import LoginComponent from './LoginComponent.jsx';
 import RegisterComponent from './RegisterComponent.jsx';
@@ -35,9 +36,9 @@ const styles = theme => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
+    marginTop: theme.spacing.unit * 8,
   },
   paper: {
-    marginTop: theme.spacing.unit * 8,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -75,19 +76,19 @@ class Login extends React.Component {
     return (
       <React.Fragment>
       <main className={classes.layout}>
-        <div className={classes.paper}>
-          <AppBar position="static" color="default">
-            <Tabs
-              value={this.state.value}
-              onChange={this.handleChange}
-              indicatorColor="primary"
-              textColor="primary"
-              fullWidth
+        <AppBar position="static" color="default">
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            fullWidth
             >
-              <Tab label="Login" />
-              <Tab label="Register" />
-            </Tabs>
-          </AppBar>
+            <Tab label="Login" />
+            <Tab label="Register" />
+          </Tabs>
+        </AppBar>
+        <Paper className={classes.paper}>
           <SwipeableViews
             axis='x'
             index={this.state.value}
@@ -100,7 +101,7 @@ class Login extends React.Component {
               <RegisterComponent history={this.props.history} />
             </TabContainer>
           </SwipeableViews>
-        </div>
+        </Paper>
       </main>
     </React.Fragment>
     )

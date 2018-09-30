@@ -23,11 +23,11 @@ const styles = theme => ({
   },
   content: {
     flex: '1 0 auto',
-    minWidth: '400px',
+    width: '400px',
   },
   cover: {
-    width: 151,
-    height: 151,
+    width: 200,
+    height: 200,
   },
   mobile_card: {
     width: '100%',
@@ -51,7 +51,7 @@ class PlaylistItem extends React.Component {
     axios({
       url: `https://api.naviaddress.com/api/v1.5/Addresses/${container}/${address}?lang=ru`,
     }).then(resp => {
-      let image = cocktail;
+      let image = this.props.data.image_url;
       if (resp.data.result.cover) {
         if (resp.data.result.cover.length > 0) {
           image = resp.data.result.cover[0].image;
@@ -63,7 +63,7 @@ class PlaylistItem extends React.Component {
       });
     }).catch(err => {
       this.setState({
-        image: cocktail,
+        image: this.props.data.image_url ? this.props.data.image_url : cocktail,
         name: this.props.data.name,
       });
     });

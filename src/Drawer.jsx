@@ -38,12 +38,12 @@ const styles = theme => ({
     width: '100%',
   },
   appBar: {
-    position: 'absolute',
+    position: 'fixed',
     marginLeft: drawerWidth,
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
-    height: '72px',
+    //height: '72px',
   },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
@@ -61,11 +61,17 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: drawerWidth,
+    },
   },
   logo: {
     fontFamily: '"Comfortaa"',
     fontSize: '2rem',
   },
+  desktopdrawer: {
+    position: 'fixed',
+  }
 });
 
 class ResponsiveDrawer extends React.Component {
@@ -85,12 +91,6 @@ class ResponsiveDrawer extends React.Component {
         <AccountHeader />
         <Divider />
         <List>
-          <ListItem button component={Link} to="/" onClick={this.handleDrawerToggle}>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItem>
           <ListItem button component={Link} to="/search" onClick={this.handleDrawerToggle}>
             <ListItemIcon>
               <SearchIcon />
@@ -144,6 +144,7 @@ class ResponsiveDrawer extends React.Component {
         <Hidden smDown implementation="css">
           <Drawer
             variant="permanent"
+            className={classes.desktopdrawer}
             open
             classes={{
               paper: classes.drawerPaper,
@@ -157,7 +158,7 @@ class ResponsiveDrawer extends React.Component {
           <Switch>
             <Route exact path='/search' component={Search} />
             <Route exact path='/playlist' component={Playlist} />
-            <Route exact path='/' component={Home}/>
+            <Route exact path='/' component={Playlist}/>
             <Route path='/unit/:id' component={Unit} />
           </Switch>
         </main>
