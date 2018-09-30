@@ -7,11 +7,10 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import cocktail from './cocktail.png';
 import Rateit from './Rateit.jsx'
 import Hidden from '@material-ui/core/Hidden';
 
-import axios from 'axios';
+import { navi_only } from '../api_calls.jsx';
 
 const styles = theme => ({
   card: {
@@ -46,25 +45,10 @@ class PlaylistItem extends React.Component {
   state = {};
 
   componentDidMount = () => {
-    let container = this.props.data.navicontainer;
-    let address = this.props.data.naviaddress;
-    axios({
-      url: `https://api.naviaddress.com/api/v1.5/Addresses/${container}/${address}?lang=ru`,
-    }).then(resp => {
-      let image = this.props.data.image_url;
-      if (resp.data.result.cover) {
-        if (resp.data.result.cover.length > 0) {
-          image = resp.data.result.cover[0].image;
-        }
-      }
+    navi_only(this.props.data, res => {
       this.setState({
-        image: image,
-        name: resp.data.result.name,
-      });
-    }).catch(err => {
-      this.setState({
-        image: this.props.data.image_url ? this.props.data.image_url : cocktail,
-        name: this.props.data.name,
+        image: res.image,
+        name: res.name,
       });
     });
   }

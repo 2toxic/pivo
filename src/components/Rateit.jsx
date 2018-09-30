@@ -54,6 +54,7 @@ class Rateit extends React.Component {
           onClick={event => { this.click(event, i) }}
           onMouseEnter={event => {this.enter(event, i) }}
           onMouseLeave={event => {this.leave(event, i) }}
+          key={`star-${this.props.key}-${i}`}
         />
       )
     }
@@ -63,6 +64,7 @@ class Rateit extends React.Component {
           onClick={event => { this.click(event, i) }}
           onMouseEnter={event => {this.enter(event, i) }}
           onMouseLeave={event => {this.leave(event, i) }}
+          key={`star-${this.props.key}-${i}`}
         />
       )
     }
@@ -78,12 +80,12 @@ class Rateit extends React.Component {
     let stars = [];
     for (let i = 0; i < rating; i++) {
       stars.push(
-        <StarIcon className={this.props.classes.rated} />
+        <StarIcon key={`star-${this.props.key}-${i}`} className={this.props.classes.rated} />
       )
     }
     for (let i = rating; i < 5; i++) {
       stars.push(
-        <StarBorderIcon className={this.props.classes.rated} />
+        <StarBorderIcon key={`star-${this.props.key}-${i}`} className={this.props.classes.rated} />
       )
     }
     this.setState({ stars: stars });
@@ -97,6 +99,7 @@ class Rateit extends React.Component {
           onClick={event => { this.click(event, i) }}
           onMouseEnter={event => {this.enter(event, i) }}
           onMouseLeave={event => {this.leave(event, i) }}
+          key={`star-${this.props.key}-${i}`}
         />
       )
     }
@@ -106,6 +109,7 @@ class Rateit extends React.Component {
           onClick={event => { this.click(event, i) }}
           onMouseEnter={event => {this.enter(event, i) }}
           onMouseLeave={event => {this.leave(event, i) }}
+          key={`star-${this.props.key}-${i}`}
         />
       )
     }

@@ -10,11 +10,10 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 
 import classnames from 'classnames';
-import axios from 'axios';
-import cocktail from '../cocktail.png';
 import Rateit from '../Rateit.jsx';
 import Info from './Info.jsx';
-import Mile from './Mile.jsx'
+import Mile from './Mile.jsx';
+import { full_info as eatout_place } from '../../api_calls.jsx';
 
 const styles = theme => ({
   content: {
@@ -25,7 +24,10 @@ const styles = theme => ({
   card: {
     maxWidth: '100%',
   },
-
+  media: {
+    // ⚠️ object-fit is not supported by IE11.
+    objectFit: 'cover',
+  },
 });
 
 class Unit extends React.Component {
@@ -47,48 +49,21 @@ class Unit extends React.Component {
       }});
   };
 
-  set_data_from_apis() {
-    let { navicontainer, naviaddress } = this.state.eatout;
-    axios.get(`https://api.naviaddress.com/api/v1.5/Addresses/${navicontainer}/${naviaddress}?lang=ru`)
-      .then(res => {
-        const resp = res.data.result;
-        if (resp.cover.length < 1) {
-          this.setState({ cover: cocktail });
-        }
-        this.setState({
-          name: resp.name,
-          cover: resp.cover[0].image,
-          description: resp.description,
-          location: resp.postal_address,
-          mile: resp.last_mile,
-          // convert [{type: t, value: v}, ...] to {t: v, ...}
-          info: resp.contacts.reduce((map, obj) => { map[obj.type] = obj.value; return map}, {}),
-        });
-      })
-      .catch(error => {
-        this.setState({
-          cover: this.state.eatout.image_url ? this.state.eatout.image_url : cocktail,
-          name: this.state.eatout.name,
-          description: '',
-          location: '',
-          mile: '',
-          info: '',
-        });
-      });
-  }
 
   componentDidMount = () => {
-    axios.get(`https://apivo.0sk.in/p/` + this.props.match.params.id)
-      .then(res => {
-        this.setState({
-          eatout: res.data,
-          rateit: <Rateit for_id={res.data.id} rating={res.data.rating} />
-        });
-        this.set_data_from_apis();
-      })
-      .catch(error => {
-        console.log(error);
+    eatout_place(this.props.match.params.id, res => {
+      this.setState({
+        eatout: res.eo,
+        name: res.name,
+        cover: res.image,
+        description: res.navi.description,
+        location: res.address,
+        mile: res.navi.last_mile,
+        // convert [{type: t, value: v}, ...] to {t: v, ...}
+        info: res.navi.contacts ? res.navi.contacts.reduce((map, obj) => { map[obj.type] = obj.value; return map}, {}) : [],
+        rateit: <Rateit key='the_only_rate' for_id={res.id} rating={res.rating} />
       });
+    });
   }
 
   render() {
@@ -107,12 +82,8 @@ class Unit extends React.Component {
                 <Typography gutterBottom variant="headline" component="h2">
                   {this.state.name}
                 </Typography>
-                <Typography component="p">
                   {this.state.location}
-                </Typography>
-                <Typography component="subheading">
                   {this.state.rateit}
-                </Typography>
                 <Info info={this.state.info} />
               </CardContent>
             <CardActions>
