@@ -10,11 +10,16 @@ import StarTwoToneIcon from '@material-ui/icons/StarTwoTone';
 import axios from 'axios';
 
 const styles = theme => ({
+  rated: {
+    color: 'green',
+  },
 });
 
 class Rateit extends React.Component {
 
-  state = {}
+  state = {
+    rated: false,
+  }
 
   handleStar = (event) => {
     event.stopPropagation();
@@ -34,7 +39,7 @@ class Rateit extends React.Component {
         this.setState({ stars: stars_text_error });
       }
       else {
-        this.setState({ stars: stars_text });
+        this.draw_rated_stars(idx + 1);
       }
     }).catch(err => {
       this.setState({ stars: stars_text_error });
@@ -68,6 +73,21 @@ class Rateit extends React.Component {
   leave = (event, idx) => {
     event.stopPropagation();
     this.draw_normal_stars();
+  }
+
+  draw_rated_stars = rating => {
+    let stars = [];
+    for (let i = 0; i < rating; i++) {
+      stars.push(
+        <StarIcon className={this.props.classes.rated} />
+      )
+    }
+    for (let i = rating; i < 5; i++) {
+      stars.push(
+        <StarBorderIcon className={this.props.classes.rated} />
+      )
+    }
+    this.setState({ stars: stars });
   }
 
   draw_normal_stars = () => {
