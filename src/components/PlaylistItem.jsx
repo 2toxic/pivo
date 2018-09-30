@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import cocktail from './cocktail.png';
 import Rateit from './Rateit.jsx'
+import Hidden from '@material-ui/core/Hidden';
 
 import axios from 'axios';
 
@@ -28,6 +29,16 @@ const styles = theme => ({
     width: 151,
     height: 151,
   },
+  mobile_card: {
+    width: '100%',
+  },
+  mobile_media: {
+    height: 200,
+    //objectFit: 'cover',
+  },
+  mobile_actionarea: {
+    width: '100%',
+  }
 });
 
 class PlaylistItem extends React.Component {
@@ -67,23 +78,42 @@ class PlaylistItem extends React.Component {
 
     return (
       <ListItem key={this.props.key}>
-        <Card className={classes.card}>
-          <CardActionArea onClick={() => this.move_to(`/unit/${this.props.data.id}`)}>
-            <div className={classes.details}>
-              <CardContent className={classes.content}>
-                <Typography variant="headline">{this.state.name}</Typography>
-                <Typography variant="sLive from space album coverubheading" color="textSecondary">
-                  <Rateit for_id={this.props.data.id} rating={this.props.data.rating}/>
-                </Typography>
-              </CardContent>
-            </div>
-          </CardActionArea>
+        <Hidden smDown implementation="css">
+          <Card className={classes.card}>
+            <CardActionArea onClick={() => this.move_to(`/unit/${this.props.data.id}`)}>
+              <div className={classes.details}>
+                <CardContent className={classes.content}>
+                  <Typography variant="headline">{this.state.name}</Typography>
+                  <Typography variant="sLive from space album coverubheading" color="textSecondary">
+                    <Rateit for_id={this.props.data.id} rating={this.props.data.rating}/>
+                  </Typography>
+                </CardContent>
+              </div>
+            </CardActionArea>
             <CardMedia
               className={classes.cover}
               image={this.state.image}
               title={this.state.name}
               />
-        </Card>
+          </Card>
+        </Hidden>
+        <Hidden mdUp>
+          <Card className={classes.mobile_card}>
+            <CardActionArea className={classes.mobile_actionarea} onClick={() => this.move_to(`/unit/${this.props.data.id}`)}>
+              <CardMedia
+                className={classes.mobile_media}
+                image={this.state.image}
+                title={this.state.name}
+                />
+              <CardContent>
+                <Typography variant="headline">{this.state.name}</Typography>
+                <Typography variant="subheading" color="textSecondary">
+                  <Rateit for_id={this.props.data.id} rating={this.props.data.rating}/>
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Hidden>
       </ListItem>
     )
   }
