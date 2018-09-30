@@ -43,6 +43,7 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
+    height: '72px',
   },
   navIconHide: {
     [theme.breakpoints.up('md')]: {
@@ -60,6 +61,10 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+  },
+  logo: {
+    fontFamily: '"Comfortaa"',
+    fontSize: '2rem',
   },
 });
 
@@ -114,8 +119,8 @@ class ResponsiveDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
-              EATOUT
+            <Typography className={classes.logo} color="inherit" noWrap>
+              eatout
             </Typography>
           </Toolbar>
         </AppBar>
