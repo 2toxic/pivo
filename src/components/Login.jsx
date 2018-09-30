@@ -95,10 +95,10 @@ class Login extends React.Component {
             onChangeIndex={this.handleChangeIndex}
             >
             <TabContainer>
-              <LoginComponent history={this.props.history} />
+              <LoginComponent history={this.props.history} parent={this} />
             </TabContainer>
             <TabContainer>
-              <RegisterComponent history={this.props.history} />
+              <RegisterComponent history={this.props.history} parent={this} />
             </TabContainer>
           </SwipeableViews>
         </Paper>

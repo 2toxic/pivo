@@ -86,7 +86,7 @@ class LoginComponent extends React.Component {
     const { classes } = this.props;
 
     if (this.state.logged_in || localStorage.getItem('userid') !== '0') {
-      this.props.history.push('/home');
+      this.props.history.push('/');
     }
 
     return (

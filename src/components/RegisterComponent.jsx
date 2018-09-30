@@ -84,7 +84,7 @@ class RegisterComponent extends React.Component {
         return;
       }
       else {
-        this.props.history.push('/login');
+        this.props.parent.handleChangeIndex(0);
       }
     })
     .catch(err => {
