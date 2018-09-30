@@ -222,16 +222,10 @@ class Unit extends React.Component {
     }
     return (
       <div className={this.props.classes.center_wrapper}>
-        <Card className={this.props.classes.mile_card}>
-        <div className={this.props.classes.mile_details_container}>
-          <CardContent className={this.props.classes.mile_details}>
             <List>
               {phone_and_link}
               {other}
             </List>
-          </CardContent>
-        </div>
-        </Card>
       </div>
     )
   }
@@ -259,6 +253,7 @@ class Unit extends React.Component {
                 <Typography component="p">
                   {this.state.stars}
                 </Typography>
+                {this.display_info()}
               </CardContent>
             <CardActions>
               <Button size="small" color="primary"
@@ -271,25 +266,10 @@ class Unit extends React.Component {
               >
                 {this.state.mile_expand_button_msg}
               </Button>
-              <Button size="small" color="primary"
-                className={classnames({
-                  [this.props.classes.expandOpen]: this.state.expanded,
-                })}
-                onClick={this.handleExpandInfoClick}
-                aria-expanded={this.state.info_expanded}
-                disabled={!this.state.info}
-              >
-                {this.state.info_expand_button_msg}
-              </Button>
             </CardActions>
             <Collapse in={this.state.mile_expanded} timeout="auto" unmountOnExit>
               <CardContent>
                 {this.display_mile()}
-              </CardContent>
-            </Collapse>
-            <Collapse in={this.state.info_expanded} timeout="auto" unmountOnExit>
-              <CardContent>
-                {this.display_info()}
               </CardContent>
             </Collapse>
           </Card>
