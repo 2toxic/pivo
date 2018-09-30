@@ -28,7 +28,6 @@ class RegisterComponent extends React.Component {
       this.state = {
           reg_email: '',
           reg_password: '',
-          tripadvisor: '',
           email_error: '',
           password_error: '',
       }
@@ -63,17 +62,12 @@ class RegisterComponent extends React.Component {
         data: {
                  email: this.state.reg_email,
                  password: this.state.reg_password,
-                 tripadvisor_username: this.state.tripadvisor,
         },
     })
     .then(resp => {
       if (resp.data.error) {
         if (resp.data.error === 'email_exists') {
           this.setState({ email_error: 'Email already exists', });
-          return;
-        }
-        if (resp.data.error === 'tripadvisor_username_exists') {
-          this.setState({ tripadvisor_error: 'Tripadvisor user is already registered' });
           return;
         }
         if (resp.data.error === 'db_commit_failed') {
@@ -106,11 +100,6 @@ class RegisterComponent extends React.Component {
             <InputLabel htmlFor="reg_email">Email</InputLabel>
             <Input id="reg_email" onChange={this.handleChange} />
             <FormHelperText id="email-error-text">{this.state.email_error}</FormHelperText>
-          </FormControl>
-          <FormControl className={classes.textField} error={Boolean(this.state.tripadvisor_error)} aria-describedby="tripadvisor-error-text">
-            <InputLabel htmlFor="tripadvisor">Tripadvisor username</InputLabel>
-            <Input id="tripadvisor" onChange={this.handleChange} />
-            <FormHelperText id="tripadvisor-error-text">{this.state.tripadvisor_error}</FormHelperText>
           </FormControl>
           <FormControl className={classes.textField} error={Boolean(this.state.password_error)} aria-describedby="password-error-text">
             <InputLabel htmlFor="reg_password">Password</InputLabel>
