@@ -13,8 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import { Route, Switch } from 'react-router-dom';
 import Search from './components/Search.jsx';
 import Playlist from './components/Playlist.jsx';
-import Home from './components/Home.jsx';
-import Unit from './components/Unit.jsx';
+import Unit from './components/Unit/Unit.jsx';
 import AccountHeader from './components/account.jsx'
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -23,7 +22,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import BlurOnIcon from '@material-ui/icons/BlurOn';
-import HomeIcon from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
