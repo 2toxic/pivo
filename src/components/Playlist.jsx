@@ -160,6 +160,12 @@ class Playlist extends React.Component {
         </ListItem>
       ]
     }
+
+    let distance_msg = 'Show all';
+    if (this.state.distance < 11) {
+      distance_msg = <div>Show in radius of <b>{this.state.distance}</b> km</div>
+    }
+
     return (
       <div>
         <Hidden smDown implementation="css">
@@ -168,12 +174,12 @@ class Playlist extends React.Component {
                 <ListItem key='first_item'>
                   <Paper className={this.props.classes.paper}>
                     <Typography>
-                      Show in radius of <b>{this.state.distance}</b> km
+                      {distance_msg}
                     </Typography>
                     <Slider
                       value={this.state.distance}
                       min={1}
-                      max={10}
+                      max={11}
                       step={1}
                       onChange={this.handleDistance}
                       className={this.props.classes.slider}
@@ -205,12 +211,12 @@ class Playlist extends React.Component {
                 <ListItem>
                   <Paper className={this.props.classes.paper_responsive}>
                     <Typography>
-                      Show in radius of <b>{this.state.distance}</b> km
+                      {distance_msg}
                     </Typography>
                     <Slider
                       value={this.state.distance}
                       min={1}
-                      max={10}
+                      max={11}
                       step={1}
                       onChange={this.handleDistance}
                       className={this.props.classes.slider}
