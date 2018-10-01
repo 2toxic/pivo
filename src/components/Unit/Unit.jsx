@@ -40,6 +40,9 @@ const styles = theme => ({
     objectFit: 'cover',
     width: '100%',
   },
+  dcontent: {
+    minWidth: '25%',
+  },
 });
 
 class Unit extends React.Component {
@@ -93,7 +96,7 @@ class Unit extends React.Component {
           <Card className={classes.dcard}>
             <div className={classes.flex_col}>
               <div className={classes.flex_row}>
-                <CardContent>
+                <CardContent className={classes.dcontent}>
                   <Typography gutterBottom variant="headline" component="h2">
                     {this.state.name}
                   </Typography>
@@ -104,6 +107,7 @@ class Unit extends React.Component {
                 <CardMedia
                   component="img"
                   className={classes.media}
+                  height={400}
                   image={this.state.cover}
                   />
               </div>
