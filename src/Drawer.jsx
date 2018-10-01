@@ -165,7 +165,7 @@ class ResponsiveDrawer extends React.Component {
             <Route exact path='/search' component={Search} />
             <Route exact path='/playlist' component={Playlist} />
             <Route exact path='/' component={Playlist}/>
-            <Route exact path='/rating1' component={Rating} />
+            <Route exact path='/rating' component={Rating} />
             <Route path='/unit/:id' component={Unit} />
           </Switch>
         </main>
