@@ -26,7 +26,7 @@ class Info extends React.Component {
     let other = [];
     if ('website' in info) {
       phone_and_link.push(
-        <ListItem button component='a' href={info.website}>
+        <ListItem button component='a' href={info.website} key='website'>
           <ListItemIcon>
             <LinkIcon />
           </ListItemIcon>
@@ -36,7 +36,7 @@ class Info extends React.Component {
     }
     if ('phone' in info) {
       phone_and_link.push(
-        <ListItem button component='a' href={`tel:${info.phone}`}>
+        <ListItem button component='a' href={`tel:${info.phone}`} key='phone'>
           <ListItemIcon>
             <PhoneIcon />
           </ListItemIcon>
@@ -48,7 +48,7 @@ class Info extends React.Component {
     for (var contact in info) {
       if (['website', 'phone'].indexOf(contact) === -1) {
         other.push(
-          <ListItem button component='a' href={info[contact]}>
+          <ListItem button component='a' href={info[contact]} key={contact}>
             <ListItemText primary={contact} secondary={info[contact]} />
           </ListItem>
         )

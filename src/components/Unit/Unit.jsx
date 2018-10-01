@@ -8,6 +8,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
+import Hidden from '@material-ui/core/Hidden';
 
 import classnames from 'classnames';
 import Rateit from '../Rateit.jsx';
@@ -23,6 +24,15 @@ const styles = theme => ({
   },
   card: {
     maxWidth: '100%',
+  },
+  dcard: {
+    display: 'flex',
+  },
+  flex_row: {
+    flexDirection: 'row',
+  },
+  flex_col: {
+    flexDirection: 'column',
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.
@@ -52,6 +62,12 @@ class Unit extends React.Component {
 
   componentDidMount = () => {
     eatout_place(this.props.match.params.id, res => {
+      if (res.navi.contacts) {
+        if (res.ta_url)
+          res.navi.contacts.push({ type: 'tripadvisor', value: `https://tripadvisor.ru${res.ta_url}` });
+        if (res.navicontainer && res.naviaddress)
+          res.navi.contacts.push({ type: 'naviaddress', value: `https://naviaddress.com/${res.navicontainer}/${res.naviaddress}` })
+      }
       this.setState({
         eatout: res.eo,
         name: res.name,
@@ -71,6 +87,48 @@ class Unit extends React.Component {
 
     return (
       <div className={classes.center_wrapper}>
+        <Hidden smDown implementation="css">
+          <Card className={classes.dcard}>
+            <div className={classes.flex_col}>
+              <div className={classes.flex_row}>
+                <CardContent>
+                  <Typography gutterBottom variant="headline" component="h2">
+                    {this.state.name}
+                  </Typography>
+                    {this.state.address}
+                    {this.state.rateit}
+                  <Info info={this.state.info} />
+                </CardContent>
+                <CardMedia
+                  component="img"
+                  className={classes.media}
+                  height="400"
+                  image={this.state.cover}
+                  />
+              </div>
+              <div className={classes.flex_col}>
+                <CardActions>
+                  <Button size="small" color="primary"
+                    className={classnames({
+                      [this.props.classes.expandOpen]: this.state.mile_expanded,
+                    })}
+                    onClick={this.handleExpandMileClick}
+                    aria-expanded={this.state.mile_expanded}
+                    disabled={!this.state.mile}
+                    >
+                    {this.state.mile_expand_button_msg}
+                  </Button>
+                </CardActions>
+                <Collapse in={this.state.mile_expanded} timeout="auto" unmountOnExit>
+                  <CardContent>
+                    <Mile mile={this.state.mile} />
+                  </CardContent>
+                </Collapse>
+              </div>
+            </div>
+          </Card>
+        </Hidden>
+        <Hidden mdUp>
           <Card className={classes.card}>
               <CardMedia
                 component="img"
@@ -82,7 +140,7 @@ class Unit extends React.Component {
                 <Typography gutterBottom variant="headline" component="h2">
                   {this.state.name}
                 </Typography>
-                  {this.state.location}
+                  {this.state.address}
                   {this.state.rateit}
                 <Info info={this.state.info} />
               </CardContent>
@@ -104,6 +162,7 @@ class Unit extends React.Component {
               </CardContent>
             </Collapse>
           </Card>
+        </Hidden>
       </div>
     )
   }
