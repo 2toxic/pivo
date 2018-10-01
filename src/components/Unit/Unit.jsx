@@ -30,13 +30,15 @@ const styles = theme => ({
   },
   flex_row: {
     flexDirection: 'row',
+    display: 'flex',
   },
   flex_col: {
     flexDirection: 'column',
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.
-    objectFit: 'cover',
+    objectFit: 'scale-down',
+    width: 'auto',
   },
 });
 
@@ -66,7 +68,7 @@ class Unit extends React.Component {
         if (res.ta_url)
           res.navi.contacts.push({ type: 'tripadvisor', value: `https://tripadvisor.ru${res.ta_url}` });
         if (res.navicontainer && res.naviaddress)
-          res.navi.contacts.push({ type: 'naviaddress', value: `https://naviaddress.com/${res.navicontainer}/${res.naviaddress}` })
+          res.navi.contacts.push({ type: 'naviaddress', value: {cont: res.navicontainer, addr: res.naviaddress} });
       }
       this.setState({
         eatout: res.eo,
@@ -95,7 +97,7 @@ class Unit extends React.Component {
                   <Typography gutterBottom variant="headline" component="h2">
                     {this.state.name}
                   </Typography>
-                    {this.state.address}
+                    {this.state.location}
                     {this.state.rateit}
                   <Info info={this.state.info} />
                 </CardContent>
@@ -140,7 +142,7 @@ class Unit extends React.Component {
                 <Typography gutterBottom variant="headline" component="h2">
                   {this.state.name}
                 </Typography>
-                  {this.state.address}
+                  {this.state.location}
                   {this.state.rateit}
                 <Info info={this.state.info} />
               </CardContent>
