@@ -14,7 +14,7 @@ const styles = theme => ({
     color: 'green',
   },
   rated_yellow: {
-    color: 'yellow',
+    color: '#7070FF',
   }
 });
 
