@@ -14,6 +14,7 @@ import { Route, Switch } from 'react-router-dom';
 import Search from './components/Search.jsx';
 import Playlist from './components/Playlist.jsx';
 import Unit from './components/Unit/Unit.jsx';
+import Rating from './components/Rating.jsx';
 import AccountHeader from './components/account.jsx'
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -22,6 +23,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import BlurOnIcon from '@material-ui/icons/BlurOn';
+import StarIcon from '@material-ui/icons/Star';
 import { Link } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -101,6 +103,12 @@ class ResponsiveDrawer extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Recommendations" />
           </ListItem>
+          <ListItem button component={Link} to="/rating" onClick={this.handleDrawerToggle}>
+            <ListItemIcon>
+              <StarIcon />
+            </ListItemIcon>
+            <ListItemText primary="Ratings" />
+          </ListItem>
         </List>
       </div>
     );
@@ -157,6 +165,7 @@ class ResponsiveDrawer extends React.Component {
             <Route exact path='/search' component={Search} />
             <Route exact path='/playlist' component={Playlist} />
             <Route exact path='/' component={Playlist}/>
+            <Route exact path='/rating' component={Rating} />
             <Route path='/unit/:id' component={Unit} />
           </Switch>
         </main>
