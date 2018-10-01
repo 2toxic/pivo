@@ -37,8 +37,8 @@ const styles = theme => ({
   },
   media: {
     // ⚠️ object-fit is not supported by IE11.
-    objectFit: 'scale-down',
-    width: 'auto',
+    objectFit: 'cover',
+    width: '100%',
   },
 });
 
@@ -104,7 +104,6 @@ class Unit extends React.Component {
                 <CardMedia
                   component="img"
                   className={classes.media}
-                  height="400"
                   image={this.state.cover}
                   />
               </div>
@@ -142,8 +141,10 @@ class Unit extends React.Component {
                 <Typography gutterBottom variant="headline" component="h2">
                   {this.state.name}
                 </Typography>
+                <Typography style={{whiteSpace: 'normal'}}>
                   {this.state.location}
-                  {this.state.rateit}
+                </Typography>
+                {this.state.rateit}
                 <Info info={this.state.info} />
               </CardContent>
             <CardActions>

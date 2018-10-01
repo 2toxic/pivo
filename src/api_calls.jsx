@@ -26,7 +26,7 @@ export function full_info (eo_id, cb) {
 
           result['navi'] = navi;
           result['name'] = navi.name;
-          result['address'] = navi.address;
+          result['address'] = result['address'] ? result['address'] : navi.postal_address ? navi.postal_address : result['address'];
           result['image'] = navi.cover ? navi.cover.length > 0 ? navi.cover[0].image : cocktail : cocktail;
           result['address'] = navi.postal_address;
 

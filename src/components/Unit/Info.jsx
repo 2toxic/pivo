@@ -12,6 +12,7 @@ const styles = theme => ({
   center_wrapper: {
     display: 'flex',
     justifyContent: 'center',
+    maxWidth: '100%',
   },
 });
 
@@ -30,7 +31,7 @@ class Info extends React.Component {
           <ListItemIcon>
             <LinkIcon />
           </ListItemIcon>
-          <ListItemText primary={info.website} />
+          <ListItemText primary={info.website} classes={{primary: 'wrapword'}} />
         </ListItem>
       )
     }
@@ -46,10 +47,10 @@ class Info extends React.Component {
     }
 
     for (var contact in info) {
-      if (['website', 'phone'].indexOf(contact) === -1) {
+      if (['website', 'phone', 'naviaddress'].indexOf(contact) === -1) {
         other.push(
           <ListItem button component='a' href={info[contact]} key={contact}>
-            <ListItemText primary={contact} secondary={info[contact]} />
+            <ListItemText primary={contact} />
           </ListItem>
         )
       }

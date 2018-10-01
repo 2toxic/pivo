@@ -68,7 +68,7 @@ class PlaylistItem extends React.Component {
               <div className={classes.details}>
                 <CardContent className={classes.content}>
                   <Typography variant="headline">{this.state.name}</Typography>
-                  <Typography variant="sLive from space album coverubheading" color="textSecondary">
+                  <Typography variant="subheading" color="textSecondary">
                     <Rateit for_id={this.props.data.id} rating={this.props.data.rating}/>
                   </Typography>
                 </CardContent>

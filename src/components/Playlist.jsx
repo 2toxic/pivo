@@ -165,7 +165,7 @@ class Playlist extends React.Component {
         <Hidden smDown implementation="css">
           <div className={this.props.classes.root}>
               <List>
-                <ListItem>
+                <ListItem key='first_item'>
                   <Paper className={this.props.classes.paper}>
                     <Typography>
                       Show in radius of <b>{this.state.distance}</b> km
