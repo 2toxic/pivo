@@ -173,36 +173,6 @@ class Rating extends React.Component {
         <Hidden mdUp>
           <div>
               <List>
-                <ListItem>
-                  <Paper className={this.props.classes.paper_responsive}>
-                    <Typography>
-                      Show in radius of <b>{this.state.distance}</b> km
-                    </Typography>
-                    <Slider
-                      value={this.state.distance}
-                      min={1}
-                      max={10}
-                      step={1}
-                      onChange={this.handleDistance}
-                      className={this.props.classes.slider}
-                      />
-                      <FormControl className={classes.formControl}>
-                      <Select
-                        value={this.state.type}
-                        onChange={this.handleSelectChange}
-                        inputProps={{
-                          name: 'age',
-                          id: 'age-simple',
-                        }}
-                      >
-                        <MenuItem value={'all'}>All</MenuItem>
-                        <MenuItem value={'cafe'}>Cafes</MenuItem>
-                        <MenuItem value={'restaurant'}>Restaurants</MenuItem>
-                        <MenuItem value={'bar'}>Bars</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Paper>
-                </ListItem>
                 {render_items}
               </List>
           </div>
