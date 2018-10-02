@@ -73,7 +73,7 @@ class Playlist extends React.Component {
       super(props);
       this.state = {
           listitems: '',
-          distance: 2,
+          distance: 11,
           snack_open: false,
           type: 'all',
       }
